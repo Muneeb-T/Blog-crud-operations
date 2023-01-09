@@ -1,6 +1,16 @@
+import { db } from '../config/database.js';
 const createBlog = async (req, res, next) => {
     try {
-        const { title, body } = req.body;
+        const sql = 'INSERT INTO blogs SET ?';
+        db.query(sql, req.body, (err, result) => {
+            if (err) {
+                throw err;
+            }
+            res.status(201).json({
+                success: true,
+                message: 'Post added successfully',
+            });
+        });
     } catch (err) {
         res.status(500).json({ success: false, message: err.message });
     }
