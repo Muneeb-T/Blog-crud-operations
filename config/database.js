@@ -1,4 +1,6 @@
 import mysql from 'mysql';
+import { config } from 'dotenv';
+config()
 const { DB_HOST, DB_USER, DB_PASSWORD, DB_DATABASE } = process.env;
 export const db = mysql.createConnection({
     host: DB_HOST,

@@ -26,6 +26,18 @@ const getBlog = async (req, res, next) => {
 
 const getBlogs = async (req, res, next) => {
     try {
+        const sql = `SELECT * FROM ${process.env.DB_DATABASE}`
+        db.query(sql,(err, result) => {
+            if (err) {
+                throw err;
+            }
+            res.status(201).json({
+                success: true,
+                blogs : result,
+                message: 'Blogs fetched successfully',
+            });
+        });
+
     } catch (err) {
         res.status(500).json({ success: false, message: err.message });
     }

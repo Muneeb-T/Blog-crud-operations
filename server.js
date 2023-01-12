@@ -4,6 +4,7 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import blogRoutes from './routes/blog-routes.js'
 import connectDatabase from './config/database.js';
+
 config();
 
 const PORT = process.env.PORT || 4000;

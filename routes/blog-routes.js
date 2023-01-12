@@ -5,7 +5,7 @@ import blogControllers from '../controllers/blog-controllers.js';
 const router = Router();
 router.post(
     '/post-blog',
-    validate(schemas.signup, 'body'),
+    validate(schemas.blog, 'body'),
     blogControllers.createBlog
 );
 router.get('/get-blogs', blogControllers.getBlogs);
