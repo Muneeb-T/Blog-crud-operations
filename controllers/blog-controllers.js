@@ -95,6 +95,22 @@ const updateBlog = async (req, res, next) => {
 const deleteBlog = async (req, res, next) => {
     try {
         const { id } = req.params;
+        const sql = `DELETE FROM ${tables.BLOGS} WHERE id = ${id}`;
+        db.query(sql, (err, result) => {
+            if (err) {
+                throw err;
+            }
+            if (!result.affectedRows) {
+                return res.status(404).json({
+                    success: false,
+                    message: 'Blog not found',
+                });
+            }
+            res.status(200).json({
+                success: true,
+                message: 'Blog deleted successfully.',
+            });
+        });
     } catch (err) {
         res.status(500).json({ success: false, message: err.message });
     }
