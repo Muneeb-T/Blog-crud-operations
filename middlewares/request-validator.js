@@ -1,8 +1,6 @@
 const validate = (schema, property) => {
     return (req, res, next) => {
         try {
-            console.log('Req body');
-            console.log(req.body);
             const { error } = schema.validate(req[property]);
             const valid = error == null;
             if (valid) {
@@ -13,8 +11,6 @@ const validate = (schema, property) => {
                 res.status(422).json({ success: false, message });
             }
         } catch (err) {
-            console.log('Body validation error');
-            console.log(err)
             res.status(500).json({
                 success: false,
                 message: 'Internal sever error',

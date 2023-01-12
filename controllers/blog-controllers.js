@@ -32,7 +32,7 @@ const getBlog = async (req, res, next) => {
                     message: 'Blog not found.',
                 });
             }
-            res.status(201).json({
+            res.status(200).json({
                 success: true,
                 blog: result[0],
                 message: 'Blog fetched successfully.',
@@ -50,13 +50,13 @@ const getBlogs = async (req, res, next) => {
             if (err) {
                 throw err;
             }
-            if(!result.length){
+            if (!result.length) {
                 return res.status(404).json({
-                    success : false,
-                    message: 'No blogs yet.'
-                })
+                    success: false,
+                    message: 'No blogs yet.',
+                });
             }
-            res.status(201).json({
+            res.status(200).json({
                 success: true,
                 blogs: result,
                 message: 'Blogs fetched successfully.',
@@ -70,7 +70,23 @@ const getBlogs = async (req, res, next) => {
 const updateBlog = async (req, res, next) => {
     try {
         const { id } = req.params;
-        const { title, body } = req.body;
+        const sql = `UPDATE ${tables.BLOGS} set ? WHERE id = ${id}`;
+
+        db.query(sql, req.body, (err, result) => {
+            if (err) {
+                throw err;
+            }
+            if (!result.affectedRows) {
+                return res.status(404).json({
+                    success: false,
+                    message: 'Blog not found',
+                });
+            }
+            res.status(201).json({
+                success: true,
+                message: 'Blog updated successfully.',
+            });
+        });
     } catch (err) {
         res.status(500).json({ success: false, message: err.message });
     }
